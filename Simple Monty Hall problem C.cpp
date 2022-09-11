@@ -36,6 +36,7 @@ int main(){
 		if(door[cos]==1){
 			o++;
 		}else x++;
+		
 		printf("%.2f%%\n", (double) o / (double) cn * 100.0);
 		printf("%d %d %d\n",door[0],door[1],door[2]);
 		printf("success:%d  fail:%d  count:%d \n",o,x,cn);
