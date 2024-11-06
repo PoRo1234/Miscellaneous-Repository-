@@ -35,7 +35,7 @@ int main() {
 
         // 5. 결과 출력
         printf("성공 확률: %.2f%%\n", (double)success_count / total_count * 100.0);
-        printf("성공: %d, 총 시도: %d\n\n", success_count, total_count);
+        printf("성공: %d, 시행횟수: %d\n\n", success_count, total_count);
 
         Sleep(5);  // 5ms 지연
     }
