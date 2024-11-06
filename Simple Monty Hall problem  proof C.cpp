@@ -1,47 +1,44 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h> 
-#include <windows.h> 
+#include <time.h>
+#include <windows.h>
 
-int cn = 0;
-int o = 0;
-int x = 0;
+int main() {
+    int success_count = 0, total_count = 0;
+    int door[3];
 
-int door[3] = {0,0,0};
+    srand(time(NULL));
 
-int main(){
-	srand(time(NULL));
-	for(;;){
-		cn++;
-		for(int i=0; i<3; i++) door[i]=0;
-		int car = rand() % 3;
-		door[car] = 1;
-		for(int i=0; i<3; i++){
-			if(door[i]!=1) door[i]=-9;
-		}
-		int cos = rand() % 3;
-		int fcos = cos;
-		for(int i=0; i<3; i++){
-			if(door[i]==-9 && i!=cos){
-				door[i] = -99;
-				break;
-			}
-		}
-		for(int i=0; i<3; i++){
-			if(i!=cos && door[i]!=-99){
-				cos = i;
-				break;
-			}
-		}
-		if(door[cos]==1){
-			o++;
-		}else x++;
-		
-		printf("%.2f%%\n", (double) o / (double) cn * 100.0);
-		printf("%d %d %d\n",door[0],door[1],door[2]);
-		printf("success:%d  fail:%d  count:%d \n",o,x,cn);
-		printf("first door:%d  changed door:%d \n",fcos,cos);
-		printf("\n");
-		Sleep(5);
-	}
+    while (1) {
+        total_count++;
+
+        // 1. 문 초기화 및 자동차 위치 설정
+        int car_door = rand() % 3;
+        int first_choice = rand() % 3;
+
+        // 2. 사회자가 염소가 있는 문 열기 (참가자가 고른 문이 아닌 염소 문)
+        int open_door = 0;
+        for (int i = 0; i < 3; i++) {
+            if (i != first_choice && i != car_door) {
+                open_door = i;
+                break;
+            }
+        }
+
+        // 3. 참가자가 선택을 바꾸기 (열린 문과 첫 선택 문을 제외한 나머지)
+        int changed_choice = 3 - first_choice - open_door;
+
+        // 4. 자동차 있는지 확인 및 성공 횟수 집계
+        if (changed_choice == car_door) {
+            success_count++;
+        }
+
+        // 5. 결과 출력
+        printf("성공 확률: %.2f%%\n", (double)success_count / total_count * 100.0);
+        printf("성공: %d, 총 시도: %d\n\n", success_count, total_count);
+
+        Sleep(5);  // 5ms 지연
+    }
+
+    return 0;
 }
